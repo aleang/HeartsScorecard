@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <style name="App_Theme">
+    <item name="android:editTextStyle">@style/NameStyle</item>
+  </style>
+  <style name="RowStyle">
+    <item name="android:weightSum">5</item>
+    <item name="android:layout_width">fill_parent</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:orientation">horizontal</item>
+  </style>
+  <style name="NameStyle" parent="@android:style/Widget.EditText">
+    <item name="android:background">@color/skyblue</item>
+    <item name="android:textColor">@color/black</item>
+    <item name="android:layout_weight">1</item>
+    <item name="android:layout_width">fill_parent</item>
+    <item name="android:layout_height">fill_parent</item>
+    <item name="android:padding">10dp</item>
+    <item name="android:layout_margin">2dp</item>
+  </style>
+  <style name="ScoreStyle" parent="@style/NameStyle">
+    <item name="android:background">@color/babyblue</item>
+    <item name="android:gravity">center</item>
+    <item name="android:inputType">number</item>
+    <item name="android:textSize">25dip</item>
+  </style>
+  <style name="FinalScoreStyle" parent="@style/NameStyle">
+    <item name="android:background">@color/black</item>
+    <item name="android:textColor">@color/babyblue</item>
+    <item name="android:gravity">center</item>
+    <item name="android:text">0</item>
+    <item name="android:textSize">25dip</item>
+  </style>
+  <integer name="rowCount">8</integer>
+  <color name="babyblue">#defaff</color>
+  <color name="skyblue">#87cefa</color>
+  <color name="black">#000000</color>
+</resources>
