@@ -16,12 +16,14 @@ namespace HeartsScorecard
         Icon = "@drawable/icon")]
     public class MainActivity : Activity
     {
-        List<RowOfScore> scoreViews;
-        List<ProgressBar> displayScoreProgress;
+        List<RowOfScore> _scoreViews;
+        List<ProgressBar> _displayScoreProgress;
+        List<EditText> _playerNameEditTexts;
         private MediaPlayer _shamePlayer;
-        private string[] _playerNames;
+        private string[] _playerNameSuggestions;
         private ArrayAdapter _autoCompleteAdapter;
         private Color _babyBlueColor;
+        private Color _invalidScoreColour;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -37,31 +39,32 @@ namespace HeartsScorecard
         private void InitialiseStuff()
         {
             _shamePlayer = MediaPlayer.Create(
-                            this,
-                            Resource.Raw.Shame);
-            _playerNames = new[]
+                this,
+                Resource.Raw.Shame);
+            _invalidScoreColour = Color.LightPink;
+            _playerNameSuggestions = new[]
                            {
                                "Pheng", "Matty", "Paul", "Anna", "Diego", "Irene", "Wiremu", "Marcos", "Clarita", "Michael", "Justin"
                            };
-            _autoCompleteAdapter = new ArrayAdapter(this, Android.Resource.Layout.SimpleDropDownItem1Line, _playerNames);
+            _autoCompleteAdapter = new ArrayAdapter(this, Android.Resource.Layout.SimpleDropDownItem1Line, _playerNameSuggestions);
             _babyBlueColor = Resources.GetColor(Resource.Color.babyblue);
         }
 
         private void FindViews()
         {
-            scoreViews = new List<RowOfScore>();
+            _scoreViews = new List<RowOfScore>();
             var allScoreEditTextId = new int[Resources.GetInteger(Resource.Integer.rowCount)][];
 
             GetResourceIds(allScoreEditTextId);
 
             var autoCompletePlayerIds = new[]
-                                  {
-                                      Resource.Id.player1,
-                                      Resource.Id.player2,
-                                      Resource.Id.player3,
-                                      Resource.Id.player4,
-                                      Resource.Id.player5
-                                  };
+                                        {
+                                            Resource.Id.player1,
+                                            Resource.Id.player2,
+                                            Resource.Id.player3,
+                                            Resource.Id.player4,
+                                            Resource.Id.player5
+                                        };
             foreach (var view in autoCompletePlayerIds
                 .Select(id => FindViewById<AutoCompleteTextView>(id)))
             {
@@ -71,7 +74,7 @@ namespace HeartsScorecard
 
             foreach (var rowIds in allScoreEditTextId)
             {
-                scoreViews.Add(
+                _scoreViews.Add(
                     new RowOfScore
                     {
                         EditTexts = rowIds
@@ -79,7 +82,7 @@ namespace HeartsScorecard
                             .ToArray(),
                         ResourceIds = rowIds
                     }
-                );
+                    );
             }
 
             var displayProgressIds = new[]
@@ -90,24 +93,50 @@ namespace HeartsScorecard
                                          Resource.Id.scoreProgress4,
                                          Resource.Id.scoreProgress5
                                      };
-            displayScoreProgress = new List<ProgressBar>();
+            _displayScoreProgress = new List<ProgressBar>();
             for (int i = 0; i < displayProgressIds.Length; i++)
             {
                 var pb = FindViewById<ProgressBar>(displayProgressIds[i]);
-                displayScoreProgress.Add(pb);
-                var drawableId =
-                    i == 0 ? Resource.Drawable.progress_drawable_red :
-                    i == 1 ? Resource.Drawable.progress_drawable_orange :
-                    i == 2 ? Resource.Drawable.progress_drawable_green :
-                    i == 3 ? Resource.Drawable.progress_drawable_blue :
-                            Resource.Drawable.progress_drawable_purple;
-                pb.ProgressDrawable = Resources.GetDrawable(drawableId);
+                _displayScoreProgress.Add(pb);
+                int id;
+                switch (i)
+                {
+                    case 0:
+                        id = Resource.Drawable.progress_drawable_red;
+                        break;
+                    case 1:
+                        id = Resource.Drawable.progress_drawable_orange;
+                        break;
+                    case 2:
+                        id = Resource.Drawable.progress_drawable_green;
+                        break;
+                    case 3:
+                        id = Resource.Drawable.progress_drawable_blue;
+                        break;
+                    default:
+                        id = Resource.Drawable.progress_drawable_purple;
+                        break;
+                }
+                pb.ProgressDrawable = Resources.GetDrawable(id);
             }
+
+            var playerNameIds = new List<int>
+                                {
+                                    Resource.Id.player1,
+                                    Resource.Id.player2,
+                                    Resource.Id.player3,
+                                    Resource.Id.player4,
+                                    Resource.Id.player5
+                                };
+            _playerNameEditTexts = new List<EditText>();
+            playerNameIds.ForEach(
+                i => _playerNameEditTexts.Add(FindViewById<EditText>(i))
+                );
         }
 
         private void AddEventHandler()
         {
-            foreach (var row in scoreViews)
+            foreach (var row in _scoreViews)
             {
                 for (var i = 0; i < row.EditTexts.Length; i++)
                 {
@@ -147,7 +176,8 @@ namespace HeartsScorecard
         private void UpdateScore(int playerId, RowOfScore currentRow)
         {
             if (playerId > 4) return;
-            var score = scoreViews
+
+            var score = _scoreViews
                 .Select(row => ValidateInputFromScoreEditText(row.EditTexts[playerId]))
                 .Aggregate((a, b) => a + b);
 
@@ -161,14 +191,15 @@ namespace HeartsScorecard
                 var color = _babyBlueColor;
                 if (!(rowTotal == 0 || rowTotal == 26))
                 {
-                    color = Color.LightPink;
+                    color = _invalidScoreColour;
                 }
                 et.SetBackgroundColor(color);
 
             }
 
-            displayScoreProgress[playerId].Progress = score;
+            _displayScoreProgress[playerId].Progress = score + 1;
         }
+
         public override bool OnPrepareOptionsMenu(IMenu menu)
         {
             if (menu.Size() == 0)
@@ -190,19 +221,20 @@ namespace HeartsScorecard
                         dialog.SetCancelable(true);
                         dialog.SetPositiveButton("Delete", delegate { OnCreate(null); });
                         dialog.SetNegativeButton("Cancel", delegate { });
+                        dialog.SetNeutralButton("Keep Names", delegate
+                        {
+                            var bundle = new Bundle();
+                            bundle.PutStringArrayList(
+                                "PlayerNames",
+                                _playerNameEditTexts.Select(et => et.Text).ToList()
+                            );
+                        });
                         dialog.Show();
                         return true;
                     }
                 case Resource.Id.ShameBell:
                     {
-                        if (_shamePlayer.IsPlaying)
-                        {
-                            _shamePlayer.Stop();
-                        }
-                        else
-                        {
-                            _shamePlayer.Start();
-                        }
+                        PlayShameSound();
                         return true;
                     }
                 default:
@@ -218,16 +250,30 @@ namespace HeartsScorecard
                 string.IsNullOrEmpty(editText.Text)
                     ? "0"
                     : editText.Text);
-            if (input < 0 || input > 26)
+            if (input < 0 || input > 27)
             {
-                editText.SetBackgroundColor(Color.DarkRed);
+                editText.SetBackgroundColor(_invalidScoreColour);
             }
-            else if (input >= 13 && !_shamePlayer.IsPlaying)
+            else if (input >= 13 && input != 26)
             {
-                _shamePlayer.Start();
+                PlayShameSound();
             }
 
             return input;
+        }
+
+        private void PlayShameSound()
+        {
+            if (_shamePlayer.IsPlaying)
+            {
+                _shamePlayer.Stop();
+            }
+            else
+            {
+                _shamePlayer.Reset();
+                _shamePlayer = MediaPlayer.Create(this, Resource.Raw.Shame);
+                _shamePlayer.Start();
+            }
         }
 
         private static void GetResourceIds(int[][] allScoreEditTextId)

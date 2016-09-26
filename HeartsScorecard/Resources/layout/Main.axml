@@ -33,23 +33,31 @@
         style="@style/RowStyle"
         android:id="@+id/progressBarRow"
         android:orientation="vertical">
-        <ProgressBar android:id="@+id/scoreProgress1" style="@style/ProgressBarStyle" min="-1" max="100" />
-        <ProgressBar android:id="@+id/scoreProgress2" style="@style/ProgressBarStyle" min="-1" max="100" />
-        <ProgressBar android:id="@+id/scoreProgress3" style="@style/ProgressBarStyle" min="-1" max="100" />
-        <ProgressBar android:id="@+id/scoreProgress4" style="@style/ProgressBarStyle" min="-1" max="100" />
-        <ProgressBar android:id="@+id/scoreProgress5" style="@style/ProgressBarStyle" min="-1" max="100" />
+        <ProgressBar android:id="@+id/scoreProgress1" style="@style/ProgressBarStyle" min="0" />
+        <ProgressBar android:id="@+id/scoreProgress2" style="@style/ProgressBarStyle" min="0" />
+        <ProgressBar android:id="@+id/scoreProgress3" style="@style/ProgressBarStyle" min="0" />
+        <ProgressBar android:id="@+id/scoreProgress4" style="@style/ProgressBarStyle" min="0" />
+        <ProgressBar android:id="@+id/scoreProgress5" style="@style/ProgressBarStyle" min="0" />
     </LinearLayout>
-    <LinearLayout
-        style="@style/RowStyle"
-        android:id="@+id/scoreRow1">
-        <EditText
-            android:id="@+id/scoreA1"
-            style="@style/ScoreStyle" />
-        <EditText
-            android:id="@+id/scoreA2"
-            style="@style/ScoreStyle" />
-        <EditText
-            android:id="@+id/scoreA3"
+    <ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+          <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+            <LinearLayout
+                style="@style/RowStyle"
+                android:id="@+id/scoreRow1">
+              <EditText
+                  android:id="@+id/scoreA1"
+                  style="@style/ScoreStyle" />
+              <EditText
+                  android:id="@+id/scoreA2"
+                  style="@style/ScoreStyle" />
+              <EditText
+                  android:id="@+id/scoreA3"
             style="@style/ScoreStyle" />
         <EditText
             android:id="@+id/scoreA4"
@@ -57,10 +65,10 @@
         <EditText
             android:id="@+id/scoreA5"
             style="@style/ScoreStyle" />
-    </LinearLayout>
-    <LinearLayout
-        style="@style/RowStyle"
-        android:id="@+id/scoreRow1">
+      </LinearLayout>
+      <LinearLayout
+          style="@style/RowStyle"
+          android:id="@+id/scoreRow1">
         <EditText
             android:id="@+id/scoreB1"
             style="@style/ScoreStyle" />
@@ -76,10 +84,10 @@
         <EditText
             android:id="@+id/scoreB5"
             style="@style/ScoreStyle" />
-    </LinearLayout>
-    <LinearLayout
-        style="@style/RowStyle"
-        android:id="@+id/scoreRow1">
+      </LinearLayout>
+      <LinearLayout
+          style="@style/RowStyle"
+          android:id="@+id/scoreRow1">
         <EditText
             android:id="@+id/scoreC1"
             style="@style/ScoreStyle" />
@@ -95,10 +103,10 @@
         <EditText
             android:id="@+id/scoreC5"
             style="@style/ScoreStyle" />
-    </LinearLayout>
-    <LinearLayout
-        style="@style/RowStyle"
-        android:id="@+id/scoreRow1">
+      </LinearLayout>
+      <LinearLayout
+          style="@style/RowStyle"
+          android:id="@+id/scoreRow1">
         <EditText
             android:id="@+id/scoreD1"
             style="@style/ScoreStyle" />
@@ -114,10 +122,10 @@
         <EditText
             android:id="@+id/scoreD5"
             style="@style/ScoreStyle" />
-    </LinearLayout>
-    <LinearLayout
-        style="@style/RowStyle"
-        android:id="@+id/scoreRow1">
+      </LinearLayout>
+      <LinearLayout
+          style="@style/RowStyle"
+          android:id="@+id/scoreRow1">
         <EditText
             android:id="@+id/scoreE1"
             style="@style/ScoreStyle" />
@@ -133,10 +141,10 @@
         <EditText
             android:id="@+id/scoreE5"
             style="@style/ScoreStyle" />
-    </LinearLayout>
-    <LinearLayout
-        style="@style/RowStyle"
-        android:id="@+id/scoreRow1">
+      </LinearLayout>
+      <LinearLayout
+          style="@style/RowStyle"
+          android:id="@+id/scoreRow1">
         <EditText
             android:id="@+id/scoreF1"
             style="@style/ScoreStyle" />
@@ -152,10 +160,10 @@
         <EditText
             android:id="@+id/scoreF5"
             style="@style/ScoreStyle" />
-    </LinearLayout>
-    <LinearLayout
-        style="@style/RowStyle"
-        android:id="@+id/scoreRow1">
+      </LinearLayout>
+      <LinearLayout
+          style="@style/RowStyle"
+          android:id="@+id/scoreRow1">
         <EditText
             android:id="@+id/scoreG1"
             style="@style/ScoreStyle" />
@@ -171,10 +179,10 @@
         <EditText
             android:id="@+id/scoreG5"
             style="@style/ScoreStyle" />
-    </LinearLayout>
-    <LinearLayout
-        style="@style/RowStyle"
-        android:id="@+id/scoreRow1">
+      </LinearLayout>
+      <LinearLayout
+          style="@style/RowStyle"
+          android:id="@+id/scoreRow1">
         <EditText
             android:id="@+id/scoreH1"
             style="@style/ScoreStyle" />
@@ -190,5 +198,8 @@
         <EditText
             android:id="@+id/scoreH5"
             style="@style/ScoreStyle" />
+      </LinearLayout>
     </LinearLayout>
+  </ScrollView>
 </LinearLayout>
+    
