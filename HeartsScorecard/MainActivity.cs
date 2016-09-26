@@ -1,24 +1,27 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using Android.App;
-using Android.Content;
-using Android.Runtime;
+﻿using Android.App;
+using Android.Content.Res;
+using Android.Graphics;
+using Android.Graphics.Drawables;
+using Android.Media;
+using Android.OS;
 using Android.Views;
 using Android.Widget;
-using Android.OS;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace HeartsScorecard
 {
-    [Activity(Label = "Hearts Scorecard", 
-        MainLauncher = true, 
+    [Activity(Label = "Hearts Scorecard",
+        MainLauncher = true,
         Icon = "@drawable/icon")]
     public class MainActivity : Activity
     {
         List<RowOfScore> scoreViews;
-        List<TextView> displayScoreViews;
-        private int[] currentScore;
+        List<ProgressBar> displayScoreProgress;
+        private MediaPlayer _shamePlayer;
+        private string[] _playerNames;
+        private ArrayAdapter _autoCompleteAdapter;
+        private Color _babyBlueColor;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -26,77 +29,22 @@ namespace HeartsScorecard
 
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Main);
+            InitialiseStuff();
             FindViews();
-            currentScore = new int[5];
             AddEventHandler();
-            //// Get our button from the layout resource,
-            //// and attach an event to it
-            //Button button = FindViewById<Button>(Resource.Id.MyButton);
-
-            //button.Click += delegate { button.Text = string.Format("{0} clicks!", count++); };
         }
 
-        private void AddEventHandler()
+        private void InitialiseStuff()
         {
-            foreach (var rowOfScore in scoreViews)
-            {
-                for (var i = 0; i < rowOfScore.EditTexts.Length; i++)
-                {
-                    switch (i)
-                    {
-                        case 0:
-                        {
-                            rowOfScore.EditTexts[i].FocusChange += delegate { UpdateScore(0); };
-                            break;
-                        }
-                        case 1:
-                        {
-                            rowOfScore.EditTexts[i].FocusChange += delegate { UpdateScore(1); };
-                            break;
-                        }
-                        case 2:
-                        {
-                            rowOfScore.EditTexts[i].FocusChange += delegate { UpdateScore(2); };
-                            break;
-                        }
-                        case 3:
-                        {
-                            rowOfScore.EditTexts[i].FocusChange += delegate { UpdateScore(3); };
-                            break;
-                        }
-                        case 4:
-                        {
-                            rowOfScore.EditTexts[i].FocusChange += delegate { UpdateScore(4); };
-                            break;
-                        }
-
-                    }
-                }
-            }
-        }
-
-        private void UpdateScore(int playerId)
-        {
-            if (playerId > 4) return;
-            var score = scoreViews
-                .Select(row => ValidateInputFromScoreEditText(row.EditTexts[playerId]))
-                .Aggregate((a, b) => a + b);
-            displayScoreViews[playerId].Text = score.ToString();
-        }
-
-        private int ValidateInputFromScoreEditText(EditText editText)
-        {
-            var input = int.Parse(
-                string.IsNullOrEmpty(editText.Text)
-                    ? "0"
-                    : editText.Text);
-            if (input < 0 || input > 26)
-            {
-                editText.Text = string.Empty;
-                return 0;
-            }
-
-            return input;
+            _shamePlayer = MediaPlayer.Create(
+                            this,
+                            Resource.Raw.Shame);
+            _playerNames = new[]
+                           {
+                               "Pheng", "Matty", "Paul", "Anna", "Diego", "Irene", "Wiremu", "Marcos", "Clarita", "Michael", "Justin"
+                           };
+            _autoCompleteAdapter = new ArrayAdapter(this, Android.Resource.Layout.SimpleDropDownItem1Line, _playerNames);
+            _babyBlueColor = Resources.GetColor(Resource.Color.babyblue);
         }
 
         private void FindViews()
@@ -105,6 +53,21 @@ namespace HeartsScorecard
             var allScoreEditTextId = new int[Resources.GetInteger(Resource.Integer.rowCount)][];
 
             GetResourceIds(allScoreEditTextId);
+
+            var autoCompletePlayerIds = new[]
+                                  {
+                                      Resource.Id.player1,
+                                      Resource.Id.player2,
+                                      Resource.Id.player3,
+                                      Resource.Id.player4,
+                                      Resource.Id.player5
+                                  };
+            foreach (var view in autoCompletePlayerIds
+                .Select(id => FindViewById<AutoCompleteTextView>(id)))
+            {
+                view.Adapter = _autoCompleteAdapter;
+                view.SetDropDownBackgroundDrawable(new ColorDrawable(Color.DeepSkyBlue));
+            }
 
             foreach (var rowIds in allScoreEditTextId)
             {
@@ -119,19 +82,152 @@ namespace HeartsScorecard
                 );
             }
 
-            var displayScoreIds = new[]
-                                  {
-                                      Resource.Id.displayScore1,
-                                      Resource.Id.displayScore2,
-                                      Resource.Id.displayScore3,
-                                      Resource.Id.displayScore4,
-                                      Resource.Id.displayScore5
-                                  };
-            displayScoreViews = new List<TextView>();
-            foreach (var id in displayScoreIds)
+            var displayProgressIds = new[]
+                                     {
+                                         Resource.Id.scoreProgress1,
+                                         Resource.Id.scoreProgress2,
+                                         Resource.Id.scoreProgress3,
+                                         Resource.Id.scoreProgress4,
+                                         Resource.Id.scoreProgress5
+                                     };
+            displayScoreProgress = new List<ProgressBar>();
+            for (int i = 0; i < displayProgressIds.Length; i++)
             {
-                displayScoreViews.Add(FindViewById<TextView>(id));
+                var pb = FindViewById<ProgressBar>(displayProgressIds[i]);
+                displayScoreProgress.Add(pb);
+                var drawableId =
+                    i == 0 ? Resource.Drawable.progress_drawable_red :
+                    i == 1 ? Resource.Drawable.progress_drawable_orange :
+                    i == 2 ? Resource.Drawable.progress_drawable_green :
+                    i == 3 ? Resource.Drawable.progress_drawable_blue :
+                            Resource.Drawable.progress_drawable_purple;
+                pb.ProgressDrawable = Resources.GetDrawable(drawableId);
             }
+        }
+
+        private void AddEventHandler()
+        {
+            foreach (var row in scoreViews)
+            {
+                for (var i = 0; i < row.EditTexts.Length; i++)
+                {
+                    switch (i)
+                    {
+                        case 0:
+                            {
+                                row.EditTexts[i].FocusChange += delegate { UpdateScore(0, row); };
+                                break;
+                            }
+                        case 1:
+                            {
+                                row.EditTexts[i].FocusChange += delegate { UpdateScore(1, row); };
+                                break;
+                            }
+                        case 2:
+                            {
+                                row.EditTexts[i].FocusChange += delegate { UpdateScore(2, row); };
+                                break;
+                            }
+                        case 3:
+                            {
+                                row.EditTexts[i].FocusChange += delegate { UpdateScore(3, row); };
+                                break;
+                            }
+                        case 4:
+                            {
+                                row.EditTexts[i].FocusChange += delegate { UpdateScore(4, row); };
+                                break;
+                            }
+
+                    }
+                }
+            }
+        }
+
+        private void UpdateScore(int playerId, RowOfScore currentRow)
+        {
+            if (playerId > 4) return;
+            var score = scoreViews
+                .Select(row => ValidateInputFromScoreEditText(row.EditTexts[playerId]))
+                .Aggregate((a, b) => a + b);
+
+            // calculate current row total should be 26
+            int rowTotal = currentRow.EditTexts
+                .Select(et => ValidateInputFromScoreEditText(et))
+                .Aggregate((a, b) => a + b);
+
+            foreach (var et in currentRow.EditTexts)
+            {
+                var color = _babyBlueColor;
+                if (!(rowTotal == 0 || rowTotal == 26))
+                {
+                    color = Color.LightPink;
+                }
+                et.SetBackgroundColor(color);
+
+            }
+
+            displayScoreProgress[playerId].Progress = score;
+        }
+        public override bool OnPrepareOptionsMenu(IMenu menu)
+        {
+            if (menu.Size() == 0)
+            {
+                MenuInflater.Inflate(Resource.Menu.menu, menu);
+            }
+            return base.OnPrepareOptionsMenu(menu);
+        }
+
+        public override bool OnOptionsItemSelected(IMenuItem item)
+        {
+            switch (item.ItemId)
+            {
+                case Resource.Id.ClearAllFields:
+                    {
+                        var dialog = new AlertDialog.Builder(this);
+                        dialog.SetTitle("Clear Scorecard");
+                        dialog.SetMessage("Are you sure you want to delete all the scores?");
+                        dialog.SetCancelable(true);
+                        dialog.SetPositiveButton("Delete", delegate { OnCreate(null); });
+                        dialog.SetNegativeButton("Cancel", delegate { });
+                        dialog.Show();
+                        return true;
+                    }
+                case Resource.Id.ShameBell:
+                    {
+                        if (_shamePlayer.IsPlaying)
+                        {
+                            _shamePlayer.Stop();
+                        }
+                        else
+                        {
+                            _shamePlayer.Start();
+                        }
+                        return true;
+                    }
+                default:
+                    // If we got here, the user's action was not recognized.
+                    // Invoke the superclass to handle it.
+                    return base.OnOptionsItemSelected(item);
+            }
+        }
+
+        private int ValidateInputFromScoreEditText(EditText editText)
+        {
+            var input = int.Parse(
+                string.IsNullOrEmpty(editText.Text)
+                    ? "0"
+                    : editText.Text);
+            if (input < 0 || input > 26)
+            {
+                editText.SetBackgroundColor(Color.DarkRed);
+            }
+            else if (input >= 13 && !_shamePlayer.IsPlaying)
+            {
+                _shamePlayer.Start();
+            }
+
+            return input;
         }
 
         private static void GetResourceIds(int[][] allScoreEditTextId)
