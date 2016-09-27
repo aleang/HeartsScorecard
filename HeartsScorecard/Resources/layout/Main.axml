@@ -1,205 +1,84 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/white">
-    <LinearLayout
-        style="@style/RowStyle"
-        android:id="@+id/nameRow">
-        <AutoCompleteTextView
-            android:id="@+id/player1"
-            style="@style/NameStyle"
-            android:background="@color/red"/>
-        <AutoCompleteTextView
-            android:id="@+id/player2"
-            style="@style/NameStyle"
-            android:background="@color/orange" />
-        <AutoCompleteTextView
-            android:id="@+id/player3"
-            style="@style/NameStyle"
-            android:background="@color/green" />
-        <AutoCompleteTextView
-            android:id="@+id/player4"
-            style="@style/NameStyle"
-            android:background="@color/blue" />
-        <AutoCompleteTextView
-            android:id="@+id/player5"
-            style="@style/NameStyle"
-            android:background="@color/purple" />
-    </LinearLayout>
-
-    <LinearLayout
-        style="@style/RowStyle"
-        android:id="@+id/progressBarRow"
-        android:orientation="vertical">
-        <ProgressBar android:id="@+id/scoreProgress1" style="@style/ProgressBarStyle" min="0" />
-        <ProgressBar android:id="@+id/scoreProgress2" style="@style/ProgressBarStyle" min="0" />
-        <ProgressBar android:id="@+id/scoreProgress3" style="@style/ProgressBarStyle" min="0" />
-        <ProgressBar android:id="@+id/scoreProgress4" style="@style/ProgressBarStyle" min="0" />
-        <ProgressBar android:id="@+id/scoreProgress5" style="@style/ProgressBarStyle" min="0" />
-    </LinearLayout>
-    <ScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
-          <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
-            <LinearLayout
-                style="@style/RowStyle"
-                android:id="@+id/scoreRow1">
-              <EditText
-                  android:id="@+id/scoreA1"
-                  style="@style/ScoreStyle" />
-              <EditText
-                  android:id="@+id/scoreA2"
-                  style="@style/ScoreStyle" />
-              <EditText
-                  android:id="@+id/scoreA3"
-            style="@style/ScoreStyle" />
-        <EditText
-            android:id="@+id/scoreA4"
-            style="@style/ScoreStyle" />
-        <EditText
-            android:id="@+id/scoreA5"
-            style="@style/ScoreStyle" />
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent" android:background="@android:color/white">
+  <LinearLayout style="@style/RowStyle" android:id="@+id/nameRow">
+    <AutoCompleteTextView android:id="@+id/player1" style="@style/NameStyle" android:background="@color/red" />
+    <AutoCompleteTextView android:id="@+id/player2" style="@style/NameStyle" android:background="@color/orange" />
+    <AutoCompleteTextView android:id="@+id/player3" style="@style/NameStyle" android:background="@color/green" />
+    <AutoCompleteTextView android:id="@+id/player4" style="@style/NameStyle" android:background="@color/blue" />
+    <AutoCompleteTextView android:id="@+id/player5" style="@style/NameStyle" android:background="@color/purple" />
+  </LinearLayout>
+  <LinearLayout style="@style/RowStyleForScore" android:id="@+id/scoreTextViewRow" android:visibility="gone">
+    <TextView android:id="@+id/displayScore1" style="@style/FinalScoreStyle" />
+    <TextView android:id="@+id/displayScore2" style="@style/FinalScoreStyle" />
+    <TextView android:id="@+id/displayScore3" style="@style/FinalScoreStyle" />
+    <TextView android:id="@+id/displayScore4" style="@style/FinalScoreStyle" />
+    <TextView android:id="@+id/displayScore5" style="@style/FinalScoreStyle" />
+  </LinearLayout>
+  <LinearLayout style="@style/RowStyleForScore" android:id="@+id/scoreProgressBarRow" android:orientation="vertical">
+    <ProgressBar android:id="@+id/scoreProgress1" style="@style/ProgressBarStyle" min="0" />
+    <ProgressBar android:id="@+id/scoreProgress2" style="@style/ProgressBarStyle" min="0" />
+    <ProgressBar android:id="@+id/scoreProgress3" style="@style/ProgressBarStyle" min="0" />
+    <ProgressBar android:id="@+id/scoreProgress4" style="@style/ProgressBarStyle" min="0" />
+    <ProgressBar android:id="@+id/scoreProgress5" style="@style/ProgressBarStyle" min="0" />
+  </LinearLayout>
+  <ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent">
+    <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent">
+      <LinearLayout style="@style/RowStyle" android:id="@+id/scoreRow1">
+        <EditText android:id="@+id/scoreA1" android:nextFocusDown="@+id/scoreA2" style="@style/ScoreStyle" />
+        <EditText android:id="@+id/scoreA2" android:nextFocusDown="@+id/scoreA3" style="@style/ScoreStyle" />
+        <EditText android:id="@+id/scoreA3" android:nextFocusDown="@+id/scoreA4" style="@style/ScoreStyle" />
+        <EditText android:id="@+id/scoreA4" android:nextFocusDown="@+id/scoreA5" style="@style/ScoreStyle" />
+        <EditText android:id="@+id/scoreA5" style="@style/ScoreStyle" />
       </LinearLayout>
-      <LinearLayout
-          style="@style/RowStyle"
-          android:id="@+id/scoreRow1">
-        <EditText
-            android:id="@+id/scoreB1"
-            style="@style/ScoreStyle" />
-        <EditText
-            android:id="@+id/scoreB2"
-            style="@style/ScoreStyle" />
-        <EditText
-            android:id="@+id/scoreB3"
-            style="@style/ScoreStyle" />
-        <EditText
-            android:id="@+id/scoreB4"
-            style="@style/ScoreStyle" />
-        <EditText
-            android:id="@+id/scoreB5"
-            style="@style/ScoreStyle" />
+      <LinearLayout style="@style/RowStyle" android:id="@+id/scoreRow1">
+        <EditText android:id="@+id/scoreB1" style="@style/ScoreStyle" />
+        <EditText android:id="@+id/scoreB2" style="@style/ScoreStyle" />
+        <EditText android:id="@+id/scoreB3" style="@style/ScoreStyle" />
+        <EditText android:id="@+id/scoreB4" style="@style/ScoreStyle" />
+        <EditText android:id="@+id/scoreB5" style="@style/ScoreStyle" />
       </LinearLayout>
-      <LinearLayout
-          style="@style/RowStyle"
-          android:id="@+id/scoreRow1">
-        <EditText
-            android:id="@+id/scoreC1"
-            style="@style/ScoreStyle" />
-        <EditText
-            android:id="@+id/scoreC2"
-            style="@style/ScoreStyle" />
-        <EditText
-            android:id="@+id/scoreC3"
-            style="@style/ScoreStyle" />
-        <EditText
-            android:id="@+id/scoreC4"
-            style="@style/ScoreStyle" />
-        <EditText
-            android:id="@+id/scoreC5"
-            style="@style/ScoreStyle" />
+      <LinearLayout style="@style/RowStyle" android:id="@+id/scoreRow1">
+        <EditText android:id="@+id/scoreC1" style="@style/ScoreStyle" />
+        <EditText android:id="@+id/scoreC2" style="@style/ScoreStyle" />
+        <EditText android:id="@+id/scoreC3" style="@style/ScoreStyle" />
+        <EditText android:id="@+id/scoreC4" style="@style/ScoreStyle" />
+        <EditText android:id="@+id/scoreC5" style="@style/ScoreStyle" />
       </LinearLayout>
-      <LinearLayout
-          style="@style/RowStyle"
-          android:id="@+id/scoreRow1">
-        <EditText
-            android:id="@+id/scoreD1"
-            style="@style/ScoreStyle" />
-        <EditText
-            android:id="@+id/scoreD2"
-            style="@style/ScoreStyle" />
-        <EditText
-            android:id="@+id/scoreD3"
-            style="@style/ScoreStyle" />
-        <EditText
-            android:id="@+id/scoreD4"
-            style="@style/ScoreStyle" />
-        <EditText
-            android:id="@+id/scoreD5"
-            style="@style/ScoreStyle" />
+      <LinearLayout style="@style/RowStyle" android:id="@+id/scoreRow1">
+        <EditText android:id="@+id/scoreD1" style="@style/ScoreStyle" />
+        <EditText android:id="@+id/scoreD2" style="@style/ScoreStyle" />
+        <EditText android:id="@+id/scoreD3" style="@style/ScoreStyle" />
+        <EditText android:id="@+id/scoreD4" style="@style/ScoreStyle" />
+        <EditText android:id="@+id/scoreD5" style="@style/ScoreStyle" />
       </LinearLayout>
-      <LinearLayout
-          style="@style/RowStyle"
-          android:id="@+id/scoreRow1">
-        <EditText
-            android:id="@+id/scoreE1"
-            style="@style/ScoreStyle" />
-        <EditText
-            android:id="@+id/scoreE2"
-            style="@style/ScoreStyle" />
-        <EditText
-            android:id="@+id/scoreE3"
-            style="@style/ScoreStyle" />
-        <EditText
-            android:id="@+id/scoreE4"
-            style="@style/ScoreStyle" />
-        <EditText
-            android:id="@+id/scoreE5"
-            style="@style/ScoreStyle" />
+      <LinearLayout style="@style/RowStyle" android:id="@+id/scoreRow1">
+        <EditText android:id="@+id/scoreE1" style="@style/ScoreStyle" />
+        <EditText android:id="@+id/scoreE2" style="@style/ScoreStyle" />
+        <EditText android:id="@+id/scoreE3" style="@style/ScoreStyle" />
+        <EditText android:id="@+id/scoreE4" style="@style/ScoreStyle" />
+        <EditText android:id="@+id/scoreE5" style="@style/ScoreStyle" />
       </LinearLayout>
-      <LinearLayout
-          style="@style/RowStyle"
-          android:id="@+id/scoreRow1">
-        <EditText
-            android:id="@+id/scoreF1"
-            style="@style/ScoreStyle" />
-        <EditText
-            android:id="@+id/scoreF2"
-            style="@style/ScoreStyle" />
-        <EditText
-            android:id="@+id/scoreF3"
-            style="@style/ScoreStyle" />
-        <EditText
-            android:id="@+id/scoreF4"
-            style="@style/ScoreStyle" />
-        <EditText
-            android:id="@+id/scoreF5"
-            style="@style/ScoreStyle" />
+      <LinearLayout style="@style/RowStyle" android:id="@+id/scoreRow1">
+        <EditText android:id="@+id/scoreF1" style="@style/ScoreStyle" />
+        <EditText android:id="@+id/scoreF2" style="@style/ScoreStyle" />
+        <EditText android:id="@+id/scoreF3" style="@style/ScoreStyle" />
+        <EditText android:id="@+id/scoreF4" style="@style/ScoreStyle" />
+        <EditText android:id="@+id/scoreF5" style="@style/ScoreStyle" />
       </LinearLayout>
-      <LinearLayout
-          style="@style/RowStyle"
-          android:id="@+id/scoreRow1">
-        <EditText
-            android:id="@+id/scoreG1"
-            style="@style/ScoreStyle" />
-        <EditText
-            android:id="@+id/scoreG2"
-            style="@style/ScoreStyle" />
-        <EditText
-            android:id="@+id/scoreG3"
-            style="@style/ScoreStyle" />
-        <EditText
-            android:id="@+id/scoreG4"
-            style="@style/ScoreStyle" />
-        <EditText
-            android:id="@+id/scoreG5"
-            style="@style/ScoreStyle" />
+      <LinearLayout style="@style/RowStyle" android:id="@+id/scoreRow1">
+        <EditText android:id="@+id/scoreG1" style="@style/ScoreStyle" />
+        <EditText android:id="@+id/scoreG2" style="@style/ScoreStyle" />
+        <EditText android:id="@+id/scoreG3" style="@style/ScoreStyle" />
+        <EditText android:id="@+id/scoreG4" style="@style/ScoreStyle" />
+        <EditText android:id="@+id/scoreG5" style="@style/ScoreStyle" />
       </LinearLayout>
-      <LinearLayout
-          style="@style/RowStyle"
-          android:id="@+id/scoreRow1">
-        <EditText
-            android:id="@+id/scoreH1"
-            style="@style/ScoreStyle" />
-        <EditText
-            android:id="@+id/scoreH2"
-            style="@style/ScoreStyle" />
-        <EditText
-            android:id="@+id/scoreH3"
-            style="@style/ScoreStyle" />
-        <EditText
-            android:id="@+id/scoreH4"
-            style="@style/ScoreStyle" />
-        <EditText
-            android:id="@+id/scoreH5"
-            style="@style/ScoreStyle" />
+      <LinearLayout style="@style/RowStyle" android:id="@+id/scoreRow1">
+        <EditText android:id="@+id/scoreH1" style="@style/ScoreStyle" />
+        <EditText android:id="@+id/scoreH2" style="@style/ScoreStyle" />
+        <EditText android:id="@+id/scoreH3" style="@style/ScoreStyle" />
+        <EditText android:id="@+id/scoreH4" style="@style/ScoreStyle" />
+        <EditText android:id="@+id/scoreH5" style="@style/ScoreStyle" />
       </LinearLayout>
     </LinearLayout>
   </ScrollView>
 </LinearLayout>
-    
