@@ -127,7 +127,7 @@ namespace HeartsScorecard
 			public const int ic_refresh_white_48dp = 2130837506;
 			
 			// aapt resource value: 0x7f020003
-			public const int Icon = 2130837507;
+			public const int icon = 2130837507;
 			
 			// aapt resource value: 0x7f020004
 			public const int progress_drawable_blue = 2130837508;
@@ -157,14 +157,14 @@ namespace HeartsScorecard
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f09003c
-			public const int ClearAllFields = 2131296316;
+			// aapt resource value: 0x7f090064
+			public const int ClearAllFields = 2131296356;
 			
-			// aapt resource value: 0x7f09003d
-			public const int ShameBell = 2131296317;
+			// aapt resource value: 0x7f090065
+			public const int ShameBell = 2131296357;
 			
-			// aapt resource value: 0x7f09003b
-			public const int SwitchScoreView = 2131296315;
+			// aapt resource value: 0x7f090063
+			public const int SwitchScoreView = 2131296355;
 			
 			// aapt resource value: 0x7f090007
 			public const int displayScore1 = 2131296263;
@@ -319,6 +319,126 @@ namespace HeartsScorecard
 			// aapt resource value: 0x7f09003a
 			public const int scoreH5 = 2131296314;
 			
+			// aapt resource value: 0x7f09003b
+			public const int scoreI1 = 2131296315;
+			
+			// aapt resource value: 0x7f09003c
+			public const int scoreI2 = 2131296316;
+			
+			// aapt resource value: 0x7f09003d
+			public const int scoreI3 = 2131296317;
+			
+			// aapt resource value: 0x7f09003e
+			public const int scoreI4 = 2131296318;
+			
+			// aapt resource value: 0x7f09003f
+			public const int scoreI5 = 2131296319;
+			
+			// aapt resource value: 0x7f090040
+			public const int scoreJ1 = 2131296320;
+			
+			// aapt resource value: 0x7f090041
+			public const int scoreJ2 = 2131296321;
+			
+			// aapt resource value: 0x7f090042
+			public const int scoreJ3 = 2131296322;
+			
+			// aapt resource value: 0x7f090043
+			public const int scoreJ4 = 2131296323;
+			
+			// aapt resource value: 0x7f090044
+			public const int scoreJ5 = 2131296324;
+			
+			// aapt resource value: 0x7f090045
+			public const int scoreK1 = 2131296325;
+			
+			// aapt resource value: 0x7f090046
+			public const int scoreK2 = 2131296326;
+			
+			// aapt resource value: 0x7f090047
+			public const int scoreK3 = 2131296327;
+			
+			// aapt resource value: 0x7f090048
+			public const int scoreK4 = 2131296328;
+			
+			// aapt resource value: 0x7f090049
+			public const int scoreK5 = 2131296329;
+			
+			// aapt resource value: 0x7f09004a
+			public const int scoreL1 = 2131296330;
+			
+			// aapt resource value: 0x7f09004b
+			public const int scoreL2 = 2131296331;
+			
+			// aapt resource value: 0x7f09004c
+			public const int scoreL3 = 2131296332;
+			
+			// aapt resource value: 0x7f09004d
+			public const int scoreL4 = 2131296333;
+			
+			// aapt resource value: 0x7f09004e
+			public const int scoreL5 = 2131296334;
+			
+			// aapt resource value: 0x7f09004f
+			public const int scoreM1 = 2131296335;
+			
+			// aapt resource value: 0x7f090050
+			public const int scoreM2 = 2131296336;
+			
+			// aapt resource value: 0x7f090051
+			public const int scoreM3 = 2131296337;
+			
+			// aapt resource value: 0x7f090052
+			public const int scoreM4 = 2131296338;
+			
+			// aapt resource value: 0x7f090053
+			public const int scoreM5 = 2131296339;
+			
+			// aapt resource value: 0x7f090054
+			public const int scoreN1 = 2131296340;
+			
+			// aapt resource value: 0x7f090055
+			public const int scoreN2 = 2131296341;
+			
+			// aapt resource value: 0x7f090056
+			public const int scoreN3 = 2131296342;
+			
+			// aapt resource value: 0x7f090057
+			public const int scoreN4 = 2131296343;
+			
+			// aapt resource value: 0x7f090058
+			public const int scoreN5 = 2131296344;
+			
+			// aapt resource value: 0x7f090059
+			public const int scoreO1 = 2131296345;
+			
+			// aapt resource value: 0x7f09005a
+			public const int scoreO2 = 2131296346;
+			
+			// aapt resource value: 0x7f09005b
+			public const int scoreO3 = 2131296347;
+			
+			// aapt resource value: 0x7f09005c
+			public const int scoreO4 = 2131296348;
+			
+			// aapt resource value: 0x7f09005d
+			public const int scoreO5 = 2131296349;
+			
+			// aapt resource value: 0x7f09005e
+			public const int scoreP1 = 2131296350;
+			
+			// aapt resource value: 0x7f09005f
+			public const int scoreP2 = 2131296351;
+			
+			// aapt resource value: 0x7f090060
+			public const int scoreP3 = 2131296352;
+			
+			// aapt resource value: 0x7f090061
+			public const int scoreP4 = 2131296353;
+			
+			// aapt resource value: 0x7f090062
+			public const int scoreP5 = 2131296354;
+			
 			// aapt resource value: 0x7f09000d
 			public const int scoreProgress1 = 2131296269;
 			
@@ -420,17 +540,20 @@ namespace HeartsScorecard
 		public partial class Style
 		{
 			
+			// aapt resource value: 0x7f050003
+			public const int AppTextLabel = 2131034115;
+			
 			// aapt resource value: 0x7f050000
 			public const int App_Theme = 2131034112;
 			
+			// aapt resource value: 0x7f050007
+			public const int FinalScoreStyle = 2131034119;
+			
+			// aapt resource value: 0x7f050004
+			public const int NameStyle = 2131034116;
+			
 			// aapt resource value: 0x7f050006
-			public const int FinalScoreStyle = 2131034118;
-			
-			// aapt resource value: 0x7f050003
-			public const int NameStyle = 2131034115;
-			
-			// aapt resource value: 0x7f050005
-			public const int ProgressBarStyle = 2131034117;
+			public const int ProgressBarStyle = 2131034118;
 			
 			// aapt resource value: 0x7f050001
 			public const int RowStyle = 2131034113;
@@ -438,8 +561,8 @@ namespace HeartsScorecard
 			// aapt resource value: 0x7f050002
 			public const int RowStyleForScore = 2131034114;
 			
-			// aapt resource value: 0x7f050004
-			public const int ScoreStyle = 2131034116;
+			// aapt resource value: 0x7f050005
+			public const int ScoreStyle = 2131034117;
 			
 			static Style()
 			{

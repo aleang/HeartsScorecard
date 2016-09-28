@@ -1,4 +1,5 @@
 ﻿using Android.App;
+using Android.Content.PM;
 using Android.Content.Res;
 using Android.Graphics;
 using Android.Graphics.Drawables;
@@ -13,12 +14,16 @@ namespace HeartsScorecard
 {
     [Activity(Label = "Hearts Scorecard",
         MainLauncher = true,
+        ScreenOrientation = ScreenOrientation.Portrait,
         Icon = "@drawable/icon")]
     public class MainActivity : Activity
     {
-        List<RowOfScore> _scoreViews;
-        List<ProgressBar> _displayScoreProgress;
-        List<EditText> _playerNameEditTexts;
+        private List<EditText> _playerNameEditTexts;
+        private List<ProgressBar> _displayScoreProgress;
+        private List<TextView> _displayScoreViews;
+        private List<RowOfScore> _scoreViews;
+        private LinearLayout _rowScoreProgressBar;
+        private LinearLayout _rowScoreTextView;
         private MediaPlayer _shamePlayer;
         private string[] _playerNameSuggestions;
         private ArrayAdapter _autoCompleteAdapter;
@@ -34,6 +39,18 @@ namespace HeartsScorecard
             InitialiseStuff();
             FindViews();
             AddEventHandler();
+
+            if (bundle != null && bundle.ContainsKey("PlayerNames"))
+            {
+                var savedNameList = bundle.GetStringArrayList("PlayerNames");
+                if (savedNameList.Count == 5)
+                {
+                    for (int i = 0; i < savedNameList.Count; i++)
+                    {
+                        _playerNameEditTexts[i].Text = savedNameList[i];
+                    }
+                }
+            }
         }
 
         private void InitialiseStuff()
@@ -52,10 +69,12 @@ namespace HeartsScorecard
 
         private void FindViews()
         {
+            _rowScoreProgressBar = FindViewById<LinearLayout>(Resource.Id.scoreProgressBarRow);
+            _rowScoreTextView = FindViewById<LinearLayout>(Resource.Id.scoreTextViewRow);
             _scoreViews = new List<RowOfScore>();
             var allScoreEditTextId = new int[Resources.GetInteger(Resource.Integer.rowCount)][];
 
-            GetResourceIds(allScoreEditTextId);
+            GetAllScoreTextFields(allScoreEditTextId);
 
             var autoCompletePlayerIds = new[]
                                         {
@@ -132,6 +151,20 @@ namespace HeartsScorecard
             playerNameIds.ForEach(
                 i => _playerNameEditTexts.Add(FindViewById<EditText>(i))
                 );
+
+            var displayScoreIds = new[]
+                                  {
+                                      Resource.Id.displayScore1,
+                                      Resource.Id.displayScore2,
+                                      Resource.Id.displayScore3,
+                                      Resource.Id.displayScore4,
+                                      Resource.Id.displayScore5
+                                  };
+            _displayScoreViews = new List<TextView>();
+            foreach (var id in displayScoreIds)
+            {
+                _displayScoreViews.Add(FindViewById<TextView>(id));
+            }
         }
 
         private void AddEventHandler()
@@ -189,15 +222,15 @@ namespace HeartsScorecard
             foreach (var et in currentRow.EditTexts)
             {
                 var color = _babyBlueColor;
-                if (!(rowTotal == 0 || rowTotal == 26))
+                if (!(rowTotal == 0 || rowTotal == 26 || rowTotal % 26 == 0))
                 {
                     color = _invalidScoreColour;
                 }
                 et.SetBackgroundColor(color);
-
             }
 
             _displayScoreProgress[playerId].Progress = score + 1;
+            _displayScoreViews[playerId].Text = score.ToString();
         }
 
         public override bool OnPrepareOptionsMenu(IMenu menu)
@@ -222,19 +255,34 @@ namespace HeartsScorecard
                         dialog.SetPositiveButton("Delete", delegate { OnCreate(null); });
                         dialog.SetNegativeButton("Cancel", delegate { });
                         dialog.SetNeutralButton("Keep Names", delegate
-                        {
-                            var bundle = new Bundle();
-                            bundle.PutStringArrayList(
-                                "PlayerNames",
-                                _playerNameEditTexts.Select(et => et.Text).ToList()
-                            );
-                        });
+                                                              {
+                                                                  var bundle = new Bundle();
+                                                                  bundle.PutStringArrayList(
+                                                                      "PlayerNames",
+                                                                      _playerNameEditTexts.Select(et => et.Text).ToList()
+                                                                      );
+                                                                  OnCreate(bundle);
+                                                              });
                         dialog.Show();
                         return true;
                     }
                 case Resource.Id.ShameBell:
                     {
                         PlayShameSound();
+                        return true;
+                    }
+                case Resource.Id.SwitchScoreView:
+                    {
+                        if (_rowScoreProgressBar.Visibility == ViewStates.Visible)
+                        {
+                            _rowScoreProgressBar.Visibility = ViewStates.Gone;
+                            _rowScoreTextView.Visibility = ViewStates.Visible;
+                        }
+                        else
+                        {
+                            _rowScoreProgressBar.Visibility = ViewStates.Visible;
+                            _rowScoreTextView.Visibility = ViewStates.Gone;
+                        }
                         return true;
                     }
                 default:
@@ -276,7 +324,7 @@ namespace HeartsScorecard
             }
         }
 
-        private static void GetResourceIds(int[][] allScoreEditTextId)
+        private static void GetAllScoreTextFields(int[][] allScoreEditTextId)
         {
             allScoreEditTextId[0] = new[]
                                     {
@@ -343,14 +391,70 @@ namespace HeartsScorecard
                                         Resource.Id.scoreH4,
                                         Resource.Id.scoreH5
                                     };
-            //allScoreEditTextId[0] = new[]
-            //                                    {
-            //                            Resource.Id.scoreA1,
-            //                            Resource.Id.scoreA2,
-            //                            Resource.Id.scoreA3,
-            //                            Resource.Id.scoreA4,
-            //                            Resource.Id.scoreA5
-            //                        };
+            allScoreEditTextId[8] = new[]
+                                                {
+                                        Resource.Id.scoreI1,
+                                        Resource.Id.scoreI2,
+                                        Resource.Id.scoreI3,
+                                        Resource.Id.scoreI4,
+                                        Resource.Id.scoreI5
+                                    };
+            allScoreEditTextId[9] = new[]
+                                                {
+                                        Resource.Id.scoreJ1,
+                                        Resource.Id.scoreJ2,
+                                        Resource.Id.scoreJ3,
+                                        Resource.Id.scoreJ4,
+                                        Resource.Id.scoreJ5
+                                    };
+            allScoreEditTextId[10] = new[]
+                                                {
+                                        Resource.Id.scoreK1,
+                                        Resource.Id.scoreK2,
+                                        Resource.Id.scoreK3,
+                                        Resource.Id.scoreK4,
+                                        Resource.Id.scoreK5
+                                    };
+            allScoreEditTextId[11] = new[]
+                                                {
+                                        Resource.Id.scoreL1,
+                                        Resource.Id.scoreL2,
+                                        Resource.Id.scoreL3,
+                                        Resource.Id.scoreL4,
+                                        Resource.Id.scoreL5
+                                    };
+            allScoreEditTextId[12] = new[]
+                                                {
+                                        Resource.Id.scoreM1,
+                                        Resource.Id.scoreM2,
+                                        Resource.Id.scoreM3,
+                                        Resource.Id.scoreM4,
+                                        Resource.Id.scoreM5
+                                    };
+            allScoreEditTextId[13] = new[]
+                                                {
+                                        Resource.Id.scoreN1,
+                                        Resource.Id.scoreN2,
+                                        Resource.Id.scoreN3,
+                                        Resource.Id.scoreN4,
+                                        Resource.Id.scoreN5
+                                    };
+            allScoreEditTextId[14] = new[]
+                                                {
+                                        Resource.Id.scoreO1,
+                                        Resource.Id.scoreO2,
+                                        Resource.Id.scoreO3,
+                                        Resource.Id.scoreO4,
+                                        Resource.Id.scoreO5
+                                    };
+            allScoreEditTextId[15] = new[]
+                                                {
+                                        Resource.Id.scoreP1,
+                                        Resource.Id.scoreP2,
+                                        Resource.Id.scoreP3,
+                                        Resource.Id.scoreP4,
+                                        Resource.Id.scoreP5
+                                    };
         }
     }
 
