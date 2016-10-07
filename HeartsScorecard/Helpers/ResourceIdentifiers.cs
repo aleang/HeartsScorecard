@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace HeartsScorecard.Helpers
 {
     public class ResourceIdentifiers
@@ -12,14 +10,14 @@ namespace HeartsScorecard.Helpers
             Resource.Id.scoreProgress4,
             Resource.Id.scoreProgress5
         };
-        public static List<int> PlayerNameEditText = new List<int>
-                                                     {
-                                                         Resource.Id.player1,
-                                                         Resource.Id.player2,
-                                                         Resource.Id.player3,
-                                                         Resource.Id.player4,
-                                                         Resource.Id.player5
-                                                     };
+        public static int[] PlayerNameEditText =
+        {
+            Resource.Id.player1,
+            Resource.Id.player2,
+            Resource.Id.player3,
+            Resource.Id.player4,
+            Resource.Id.player5
+        };
 
         public static int[] ScoreTextView =
         {
@@ -36,6 +34,25 @@ namespace HeartsScorecard.Helpers
             Resource.Id.player3,
             Resource.Id.player4,
             Resource.Id.player5
+        };
+        public static int[] ShareCardsTextView =
+        {
+            Resource.Id.round01,
+            Resource.Id.round02,
+            Resource.Id.round03,
+            Resource.Id.round04,
+            Resource.Id.round05,
+            Resource.Id.round06,
+            Resource.Id.round07,
+            Resource.Id.round08,
+            Resource.Id.round09,
+            Resource.Id.round10,
+            Resource.Id.round11,
+            Resource.Id.round12,
+            Resource.Id.round13,
+            Resource.Id.round14,
+            Resource.Id.round15,
+            Resource.Id.round16
         };
     }
 }

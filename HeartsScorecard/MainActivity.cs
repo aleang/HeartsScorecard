@@ -24,11 +24,11 @@ namespace HeartsScorecard
         private List<RowOfScore> _scoreViews;
         private LinearLayout _rowScoreProgressBar;
         private LinearLayout _rowScoreTextView;
+        private List<TextView> _shareCardsTextView;
         private string[] _playerNameSuggestions;
         private ArrayAdapter _autoCompleteAdapter;
         private Color _babyBlueColor;
         private Color _invalidScoreColour;
-        private string _lastValue;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -94,7 +94,6 @@ namespace HeartsScorecard
                     );
             }
 
-
             _displayScoreProgress = new List<ProgressBar>();
             for (int i = 0; i < ResourceIdentifiers.ScoreProgressBar.Length; i++)
             {
@@ -122,17 +121,14 @@ namespace HeartsScorecard
                 pb.ProgressDrawable = Resources.GetDrawable(id);
             }
 
+            _playerNameEditTexts = ResourceIdentifiers.PlayerNameEditText
+                .Select(id => FindViewById<EditText>(id)).ToList();
 
-            _playerNameEditTexts = new List<EditText>();
-            ResourceIdentifiers.PlayerNameEditText.ForEach(
-                i => _playerNameEditTexts.Add(FindViewById<EditText>(i))
-            );
+            _displayScoreViews = ResourceIdentifiers.ScoreTextView
+                .Select(id => FindViewById<TextView>(id)).ToList();
 
-            _displayScoreViews = new List<TextView>();
-            foreach (var id in ResourceIdentifiers.ScoreTextView)
-            {
-                _displayScoreViews.Add(FindViewById<TextView>(id));
-            }
+            _shareCardsTextView = ResourceIdentifiers.ShareCardsTextView.
+                Select(id => FindViewById<TextView>(id)).ToList();
         }
 
         private void AddEventHandler()
@@ -206,7 +202,6 @@ namespace HeartsScorecard
             // Adding one for the Progress bar to display nicely (where 0 point still shows the bar)
             _displayScoreProgress[playerId].Progress = currentTotalScore + 1;
             _displayScoreViews[playerId].Text = currentTotalScore.ToString();
-            _lastValue = currentRow.EditTexts[playerId].Text;
         }
 
         public override bool OnPrepareOptionsMenu(IMenu menu)
@@ -222,6 +217,11 @@ namespace HeartsScorecard
         {
             switch (item.ItemId)
             {
+                case Resource.Id.SetShareCardArrows:
+                    {
+                        AutofillShareCardCells();
+                        return true;
+                    }
                 case Resource.Id.ClearAllFields:
                     {
                         var dialog = new AlertDialog.Builder(this);
@@ -253,6 +253,11 @@ namespace HeartsScorecard
                         SoundManager.PlayJaws(this);
                         return true;
                     }
+                case Resource.Id.WololoRingtone:
+                    {
+                        SoundManager.PlayWololo(this);
+                        return true;
+                    }
                 case Resource.Id.SwitchScoreView:
                     {
                         if (_rowScoreProgressBar.Visibility == ViewStates.Visible)
@@ -272,6 +277,53 @@ namespace HeartsScorecard
                     // Invoke the superclass to handle it.
                     return base.OnOptionsItemSelected(item);
             }
+        }
+
+        private void AutofillShareCardCells()
+        {
+            int numberOfPlayers = _playerNameEditTexts
+                .Count(t => !string.IsNullOrWhiteSpace(t.Text));
+
+            if (numberOfPlayers <= 2 || numberOfPlayers >= 6) return;
+
+            string[] arrowSet;
+            switch (numberOfPlayers)
+            {
+                case 3:
+                    {
+                        arrowSet = Resources.GetStringArray(Resource.Array.playerCount3);
+                        break;
+                    }
+                case 4:
+                    {
+                        arrowSet = Resources.GetStringArray(Resource.Array.playerCount4);
+                        break;
+                    }
+                default:
+                    {
+                        arrowSet = Resources.GetStringArray(Resource.Array.playerCount5);
+                        break;
+                    }
+            }
+
+            int pointer = 0;
+            foreach (var textView in _shareCardsTextView)
+            {
+                if (pointer < numberOfPlayers - 1)
+                {
+                    textView.Text = arrowSet[pointer];
+                }
+                else if (pointer == numberOfPlayers - 1)
+                {
+                    textView.Text = string.Empty;
+                    pointer = 0;
+                    continue;
+                }
+                pointer++;
+            }
+
+            FindViewById<LinearLayout>(Resource.Id.ScoresSection).Visibility = ViewStates.Visible;
+            FindViewById<TextView>(Resource.Id.PlayInstruction).Visibility = ViewStates.Gone;
         }
 
         private int ValidateInputFromScoreEditText(EditText editText)

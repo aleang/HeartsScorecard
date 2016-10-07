@@ -7,6 +7,7 @@ namespace HeartsScorecard.Helpers
     {
         private static MediaPlayer _shamePlayer;
         private static MediaPlayer _jawsPlayer;
+        private static MediaPlayer _wololoPlayer;
 
         public static void PlayShame(Activity activity)
         {
@@ -47,6 +48,28 @@ namespace HeartsScorecard.Helpers
                 _jawsPlayer = MediaPlayer.Create(activity, Resource.Raw.Jaws);
                 _jawsPlayer.Looping = true;
                 _jawsPlayer.Start();
+
+            }
+        }
+
+        public static void PlayWololo(Activity activity)
+        {
+            if (_wololoPlayer == null)
+            {
+                _wololoPlayer = MediaPlayer.Create(activity, Resource.Raw.Wololo);
+                _wololoPlayer.Looping = true;
+            }
+
+            if (_wololoPlayer.IsPlaying)
+            {
+                _wololoPlayer.Stop();
+            }
+            else
+            {
+                _wololoPlayer.Reset();
+                _wololoPlayer = MediaPlayer.Create(activity, Resource.Raw.Wololo);
+                _wololoPlayer.Looping = true;
+                _wololoPlayer.Start();
 
             }
         }
