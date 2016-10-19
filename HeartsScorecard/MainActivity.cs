@@ -29,6 +29,7 @@ namespace HeartsScorecard
         private ArrayAdapter _autoCompleteAdapter;
         private Color _babyBlueColor;
         private Color _invalidScoreColour;
+        private IMenuItem _playMenuItem;
 
         protected override void OnCreate(Bundle bundle)
         {
@@ -51,6 +52,7 @@ namespace HeartsScorecard
                     }
                 }
             }
+            if (_playMenuItem != null) _playMenuItem.SetVisible(true);
         }
 
         private void InitialiseStuff()
@@ -210,6 +212,10 @@ namespace HeartsScorecard
             {
                 MenuInflater.Inflate(Resource.Menu.menu, menu);
             }
+            if (_playMenuItem == null)
+            {
+                _playMenuItem = menu.FindItem(Resource.Id.SetShareCardArrows);
+            }
             return base.OnPrepareOptionsMenu(menu);
         }
 
@@ -219,7 +225,7 @@ namespace HeartsScorecard
             {
                 case Resource.Id.SetShareCardArrows:
                     {
-                        AutofillShareCardCells();
+                        AutofillShareCardCells(item);
                         return true;
                     }
                 case Resource.Id.ClearAllFields:
@@ -279,13 +285,23 @@ namespace HeartsScorecard
             }
         }
 
-        private void AutofillShareCardCells()
+        private void AutofillShareCardCells(IMenuItem item)
         {
             int numberOfPlayers = _playerNameEditTexts
                 .Count(t => !string.IsNullOrWhiteSpace(t.Text));
 
-            if (numberOfPlayers <= 2 || numberOfPlayers >= 6) return;
+            if (numberOfPlayers <= 2 || numberOfPlayers >= 6)
+            {
+                var dialog = new AlertDialog.Builder(this);
+                dialog.SetTitle("Need More Players");
+                dialog.SetMessage("A game of Hearts must have three to five players.");
+                dialog.SetCancelable(true);
+                dialog.SetPositiveButton("OK", delegate { });
+                dialog.Show();
+                return;
+            }
 
+            item.SetVisible(false);
             string[] arrowSet;
             switch (numberOfPlayers)
             {

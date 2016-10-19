@@ -12,19 +12,16 @@
     <item name="android:orientation">horizontal</item>
   </style>
 
-  <style name="HeaderRowStyle" parent="@style/RowStyle">
-    <item name="android:weightSum">5</item>
-  </style>
-
   <style name="RowStyleForFinalScore" parent="@style/RowStyle">
     <item name="android:minHeight">60dp</item>
     <item name="android:weightSum">5</item>
   </style>
-
+  
   <!--Header section styles-->
   <style name="AppTextLabel">
     <item name="android:textColor">@color/black</item>
     <item name="android:textSize">15dip</item>
+    <item name="android:gravity">center</item>
     <item name="android:layout_width">fill_parent</item>
     <item name="android:layout_height">wrap_content</item>
     <item name="android:layout_marginLeft">5dp</item>
@@ -79,7 +76,7 @@
     <item name="android:maxLength">2</item>
   </style>
   <style name="ShareCardStyle" parent="@style/CellStyle">
-    <item name="android:background">@color/lightgray</item>
+    <item name="android:background">@color/white</item>
   </style>
 
 

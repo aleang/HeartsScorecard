@@ -3,7 +3,8 @@
   
   <TextView style="@style/AppTextLabel" android:text="Player's Name" />
   
-  <LinearLayout style="@style/HeaderRowStyle" android:id="@+id/nameRow">
+  <LinearLayout style="@style/RowStyle" android:id="@+id/nameRow">
+    <TextView style="@style/NameStyle" android:background="@color/white"></TextView>
     <AutoCompleteTextView android:id="@+id/player1" style="@style/NameStyle" android:background="@color/red" />
     <AutoCompleteTextView android:id="@+id/player2" style="@style/NameStyle" android:background="@color/orange" />
     <AutoCompleteTextView android:id="@+id/player3" style="@style/NameStyle" android:background="@color/green" />
@@ -12,7 +13,8 @@
   </LinearLayout>
   
   <TextView style="@style/AppTextLabel" android:text="Total Score" />
-  <LinearLayout style="@style/RowStyleForFinalScore" android:id="@+id/scoreTextViewRow" android:visibility="gone">
+  <LinearLayout style="@style/RowStyleForFinalScore" android:id="@+id/scoreTextViewRow" android:visibility="gone" android:weightSum="6">
+    <TextView style="@style/NameStyle" android:background="@color/white"></TextView>
     <TextView android:id="@+id/displayScore1" style="@style/FinalScoreStyle" />
     <TextView android:id="@+id/displayScore2" style="@style/FinalScoreStyle" />
     <TextView android:id="@+id/displayScore3" style="@style/FinalScoreStyle" />
@@ -29,7 +31,7 @@
   </LinearLayout>
   <TextView android:id="@+id/PlayInstruction" style="@style/AppTextLabel" android:text="Press ▶Play to Start" />
   <ScrollView android:layout_width="fill_parent" android:layout_height="fill_parent">
-    <LinearLayout android:id="@+id/ScoresSection" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent" android:visibility="gone">
+    <LinearLayout android:id="@+id/ScoresSection" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent" android:visibility="visible">
       <LinearLayout style="@style/RowStyle">
         <TextView android:id="@+id/round01" style="@style/ShareCardStyle"/>
         <EditText android:id="@+id/scoreA1" style="@style/ScoreStyle" />
