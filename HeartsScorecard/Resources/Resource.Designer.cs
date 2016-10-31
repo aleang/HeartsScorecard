@@ -191,8 +191,8 @@ namespace HeartsScorecard
 			// aapt resource value: 0x7f0a0079
 			public const int ClearAllFields = 2131361913;
 			
-			// aapt resource value: 0x7f0a0076
-			public const int JawsRingtone = 2131361910;
+			// aapt resource value: 0x7f0a0077
+			public const int JawsRingtone = 2131361911;
 			
 			// aapt resource value: 0x7f0a0012
 			public const int PlayInstruction = 2131361810;
@@ -203,14 +203,14 @@ namespace HeartsScorecard
 			// aapt resource value: 0x7f0a0074
 			public const int SetShareCardArrows = 2131361908;
 			
+			// aapt resource value: 0x7f0a0076
+			public const int ShameBell = 2131361910;
+			
 			// aapt resource value: 0x7f0a0075
-			public const int ShameBell = 2131361909;
+			public const int SwitchScoreView = 2131361909;
 			
 			// aapt resource value: 0x7f0a0078
-			public const int SwitchScoreView = 2131361912;
-			
-			// aapt resource value: 0x7f0a0077
-			public const int WololoRingtone = 2131361911;
+			public const int WololoRingtone = 2131361912;
 			
 			// aapt resource value: 0x7f0a0007
 			public const int displayScore1 = 2131361799;
